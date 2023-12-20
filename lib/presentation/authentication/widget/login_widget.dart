@@ -48,7 +48,7 @@ class _LoginWidgetState extends State<LoginWidget> {
           return loadingDialog(context);
         }
         if (state.status == LoginStatus.loaded) {
-          context.goNamed('otp', params: {'email': emailController.text});
+          context.goNamed('otp', pathParameters: {'email': emailController.text});
         }
       },
       builder: (context, state) {

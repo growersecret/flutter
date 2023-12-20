@@ -1,4 +1,4 @@
-com.example.grower
+com.example.grower.grower
 attr activityAction
 attr activityName
 attr alpha

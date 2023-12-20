@@ -22,12 +22,12 @@ final GoRouter router = GoRouter(
         name: "otp",
         path: "/otp/:email",
         builder: (context, state) =>
-            OtpScreen(email: state.params['email'].toString())),
+            OtpScreen(email: state.pathParameters['email'].toString())),
     GoRoute(
         name: "calculator",
         path: "/calculator/:profile_setup",
         builder: (context, state) => CalculatorScreen(
-              profile_setup: state.params['profile_setup'].toString(),
+              profile_setup: state.pathParameters['profile_setup'].toString(),
             )),
     GoRoute(
         path: "/calculatorResult",

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grower/heiper/islogged_in_checker.dart';
 import 'package:grower/presentation/authentication/cubit/login/login_cubit.dart';
+import 'package:grower/presentation/authentication/otp_screen.dart';
 import 'package:grower/presentation/calculator/calculation_screen/cubit/reminder/reminder_cubit.dart';
 import 'package:grower/presentation/widgets/restart_widget.dart';
 import 'package:grower/presentation/update_profile/cubit/textfield_click/textfield_click_cubit.dart';
@@ -75,6 +76,10 @@ class MyApp extends StatelessWidget {
               theme: ThemeData(primaryColor: CustomTheme.primaryColor),
               // home: const SplashScreen(),
             ),
+
+         /*   child: MaterialApp(
+              home: OtpScreen(email: '',),
+            ),*/
           );
         });
   }
@@ -109,8 +114,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 width: 180,
                 decoration: const BoxDecoration(
                     image: DecorationImage(
-                  image: AssetImage("assets/grower_logo.png"),
-                ))),
+                      image: AssetImage("assets/grower_logo.png"),
+                    ))),
             Container(
                 height: 100,
                 width: 100,

@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/deb452/Documents/DBM/grower/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-watch-v20/values-watch-v20.xml",
+            "outputFile": "com.example.grower.grower.app-mergeDebugResources-12:/values-watch-v20/values-watch-v20.xml",
             "map": [
                 {
-                    "source": "/Users/deb452/.gradle/caches/transforms-3/87b66fbc4102b6b73e9917292c412064/transformed/jetified-play-services-auth-20.1.0/res/values-watch-v20/values.xml",
+                    "source": "C:\\Users\\DBM\\.gradle\\caches\\transforms-3\\764c0246d73140dec9b4fbf159067d6f\\transformed\\jetified-play-services-auth-20.4.0\\res\\values-watch-v20\\values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11",
                         "startColumns": "0,0,0,0,0,0,0,0",

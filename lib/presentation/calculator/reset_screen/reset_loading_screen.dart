@@ -21,7 +21,7 @@ class _ResetLoadingScreenState extends State<ResetLoadingScreen> {
   void initState() {
     Timer(Duration(seconds: 1), () {
       RestartWidget.restartApp(context);
-      context.goNamed('calculator', params: {
+      context.goNamed('calculator', pathParameters: {
         'profile_setup': context
             .read<UserDetailsCubit>()
             .state
@@ -38,7 +38,7 @@ class _ResetLoadingScreenState extends State<ResetLoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+      data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: CustomAppbarWidget(

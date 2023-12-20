@@ -6,7 +6,7 @@ import FlutterMacOS
 import Foundation
 
 import printing
-import shared_preferences_macos
+import shared_preferences_foundation
 import smart_auth
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {

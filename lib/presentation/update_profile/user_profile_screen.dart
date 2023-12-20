@@ -110,7 +110,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         title: 'Are you sure you want to close?',
                         onTap: () {
                           Navigator.pop(context);
-                          context.pushNamed('calculator', params: {
+                          context.pushNamed('calculator', pathParameters: {
                             'profile_setup': context
                                 .read<UserDetailsCubit>()
                                 .state
@@ -254,7 +254,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                         leftBtnTitle: 'Yes, Exit',
                                         onTap: () {
                                           context
-                                              .pushNamed('calculator', params: {
+                                              .pushNamed('calculator', pathParameters: {
                                             'profile_setup': context
                                                 .read<UserDetailsCubit>()
                                                 .state

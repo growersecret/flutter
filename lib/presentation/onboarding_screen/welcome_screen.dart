@@ -18,6 +18,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _fadeInFadeOut;
+  Timer? _timer;
   List<String> imageUrls = [
     'assets/signup_screenbg.png',
     'assets/signup_bg1.png'
@@ -27,7 +28,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 // Define a function to switch to the next image
   void switchToNextImage() {
     currentIndex = (currentIndex + 1) % imageUrls.length;
-    setState(() {});
+
+   if(mounted){
+     setState(() {});
+   }
   }
 
   @override
@@ -42,15 +46,21 @@ class _WelcomeScreenState extends State<WelcomeScreen>
         CurvedAnimation(parent: _controller, curve: Curves.easeInToLinear));
     _controller.forward();
 
-    Timer.periodic(Duration(seconds: 3), (Timer timer) {
+     _timer = Timer.periodic(Duration(seconds: 3), (Timer timer) {
       switchToNextImage();
     });
+  }
+@override
+  void dispose() {
+    _controller.dispose();
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+      data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(

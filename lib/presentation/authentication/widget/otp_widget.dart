@@ -79,7 +79,7 @@ class _OtpWidgetState extends State<OtpWidget> {
                 );
               });
           Timer(Duration(seconds: 2), () {
-            context.goNamed('calculator', params: {'dismiss': 'false'});
+            context.goNamed('calculator', pathParameters: {'dismiss': 'false'});
           });
         }
       },

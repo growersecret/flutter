@@ -41,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     bool isFocused = context.watch<IsFocesCubit>().state.isFocus;
     return MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+      data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
       child: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {
           if (state.status == LoginStatus.error) {
@@ -51,7 +51,8 @@ class _LoginScreenState extends State<LoginScreen> {
             return loadingDialog(context);
           }
           if (state.status == LoginStatus.loaded) {
-            context.goNamed('otp', params: {'email': emailController.text});
+            context.goNamed('otp',
+                pathParameters: {'email': emailController.text});
           }
         },
         builder: (context, state) {
@@ -77,7 +78,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Spacer(),
-
                             // SizedBox(height: 87.h),
                             Center(
                               child: Container(

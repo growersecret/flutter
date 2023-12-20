@@ -128,7 +128,7 @@ class _CalculatedResultScreenState extends State<CalculatedResultScreen> {
                   leftBtnTitle: 'Yes, Close',
                   title: 'Are you sure you want to close?',
                   onTap: () {
-                    context.goNamed('calculator', params: {
+                    context.goNamed('calculator', pathParameters: {
                       'profile_setup': context
                           .read<UserDetailsCubit>()
                           .state
@@ -147,7 +147,7 @@ class _CalculatedResultScreenState extends State<CalculatedResultScreen> {
             appbarTitle: 'Calculated Results',
             isresult: true,
             ontapbackarrow: () {
-              context.goNamed('calculator', params: {
+              context.goNamed('calculator', pathParameters: {
                 'profile_setup': context
                      .read<UserDetailsCubit>()
                     .state

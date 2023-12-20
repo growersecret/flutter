@@ -80,7 +80,7 @@ class BottomOptionsWidget extends StatelessWidget {
                   return InkWell(
                     onTap: () {
                       index == 0
-                          ? context.goNamed('calculator', params: {
+                          ? context.goNamed('calculator', pathParameters: {
                       'profile_setup': context
                           .read<UserDetailsCubit>()
                           .state
@@ -104,8 +104,7 @@ class BottomOptionsWidget extends StatelessWidget {
                       padding:
                           EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                       decoration: CustomTheme.shadowDecoration,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
+                      child: ListView(
                         children: [
                           SvgPicture.asset(optionsList[index].iconUrl,
                               height: 25),
