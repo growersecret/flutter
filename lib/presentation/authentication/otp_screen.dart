@@ -118,270 +118,266 @@ class _OtpScreenState extends State<OtpScreen> {
           return Scaffold(
             resizeToAvoidBottomInset: false,
             backgroundColor: Colors.white,
-            body: SizedBox(
-              height: double.infinity,
-              width: double.infinity,
+            body: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              color: CustomTheme.primaryColor,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    color: CustomTheme.primaryColor,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            context
-                                .read<EmailCheckerCubit>()
-                                .getemailInitialState();
-                            context
-                                .read<IsSigninValidCubit>()
-                                .emitInitialState();
-                            context
-                                .read<IsFocesCubit>()
-                                .emitinitialState();
-                            context.go('/login');
-                          },
-                          child: Container(
-                            height: 38,
-                            width: 38,
-                            margin: EdgeInsets.only(top: 50, left: 20),
-                            decoration: BoxDecoration(
-                                color: CustomTheme.seconderyColor,
-                                borderRadius:
-                                    BorderRadius.circular(50)),
-                            child: Icon(
-                              Icons.arrow_back,
-                              color: Colors.white,
-                            ),
-                          ),
+                  SingleChildScrollView(
+                    child: InkWell(
+                      onTap: () {
+                        context
+                            .read<EmailCheckerCubit>()
+                            .getemailInitialState();
+                        context
+                            .read<IsSigninValidCubit>()
+                            .emitInitialState();
+                        context
+                            .read<IsFocesCubit>()
+                            .emitinitialState();
+                        context.go('/login');
+                      },
+                      child: Container(
+                        height: 38,
+                        width: 38,
+                        margin: EdgeInsets.only(top: 50, left: 20),
+                        decoration: BoxDecoration(
+                            color: CustomTheme.seconderyColor,
+                            borderRadius:
+                                BorderRadius.circular(50)),
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
                         ),
-
-                        Spacer(),
-                        Center(
-                          child: Container(
-                            height: 90,
-                            width: 90,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: CustomTheme.seconderyColor,
-                            ),
-                            margin: EdgeInsets.only(bottom: 10),
-                            child: Center(
-                              child: Image.asset('assets/otp_logo.png'),
-                            ),
-                          ),
-                        ),
-                        Spacer(),
-                        // SizedBox(height: 70.h),
-                        Container(
-                          height: 437.h,
-                          width: MediaQuery.of(context).size.width,
-                          padding: EdgeInsets.only(
-                            left: 20,
-                            right: 20,
-                            bottom: MediaQuery.of(context)
-                                .viewInsets
-                                .bottom,
-                          ),
-                          margin: EdgeInsets.only(
-                            bottom: MediaQuery.of(context)
-                                    .viewInsets
-                                    .bottom *
-                                0.4,
-                          ),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(
-                                'assets/bg_round.png',
-                              ),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(top: 30.0),
-                                child: RichText(
-                                    text: TextSpan(children: [
-                                  TextSpan(
-                                    text:
-                                        'We have successfully sent an OTP (One-Time-\nPassword) to ',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14),
-                                  ),
-                                  TextSpan(
-                                    text: widget.email,
-                                    style: TextStyle(
-                                        color: CustomTheme.primaryColor,
-                                        fontSize: 14),
-                                  ),
-                                ])),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    top: 10.0, left: 73.w, right: 73.w),
-                                child: Pinput(
-                                  controller: _otpController,
-                                  length: 4,
-                                  defaultPinTheme: CustomTheme.pintheme,
-                                  focusedPinTheme: CustomTheme.pintheme,
-                                  submittedPinTheme:
-                                      CustomTheme.pintheme,
-                                  inputFormatters: <TextInputFormatter>[
-                                    FilteringTextInputFormatter.allow(
-                                        RegExp(r'[0-9]')),
-                                  ],
-                                  validator: (s) {
-                                    if (s!.isEmpty) {
-                                      return "invalid Otp!";
-                                    }
-                                  },
-                                  onTap: () {
-                                    setState(() {
-                                      isFocused = true;
-                                    });
-                                  },
-                                  pinputAutovalidateMode:
-                                      PinputAutovalidateMode.onSubmit,
-                                  showCursor: true,
-                                  onCompleted: (pin) {
-                                    setState(() {
-                                      isValid = true;
-                                      isFocused = false;
-                                    });
-                                  },
-                                ),
-                              ),
-                              expairTime == 0
-                                  ? Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 10),
-                                      child: Text('Expaired Otp !',
-                                          style: TextStyle(
-                                              color: CustomTheme
-                                                  .redErrorColor)),
-                                    )
-                                  : context
-                                              .read<VerifyOtpCubit>()
-                                              .state
-                                              .verifyotp
-                                              .status ==
-                                          403
-                                      ? Padding(
-                                          padding:
-                                              const EdgeInsets.only(
-                                                  top: 10),
-                                          child: Text(
-                                            'Invalid Otp !',
-                                            style: TextStyle(
-                                                color: CustomTheme
-                                                    .redErrorColor),
-                                          ),
-                                        )
-                                      : Container(),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  top: 20.0,
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    '00:$seconds sec',
-                                    style:
-                                        TextStyle(color: Colors.grey),
-                                  ),
-                                ),
-                              ),
-                              Center(
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                    top: 12.0,
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(
-                                        "Didn’t receive OTP yet?",
-                                        style: TextStyle(
-                                            fontSize: 14.sp,
-                                            color: Colors.grey),
-                                      ),
-                                      TextButton(
-                                        onPressed: () async {
-                                          if (_timerDuration == 0) {
-                                            setState(() {
-                                              _timerDuration = 30;
-                                              expairTime = 180;
-                                            });
-                                            startTimer();
-                                            startExpairTimer();
-                                            await resendOtp(
-                                                widget.email);
-                                            showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  Future.delayed(
-                                                      Duration(
-                                                          seconds: 1),
-                                                      () {
-                                                    Navigator.of(
-                                                            context)
-                                                        .pop(true);
-                                                  });
-                                                  return ShowToastMessage();
-                                                });
-                                          }
-                                        },
-                                        child: Text(
-                                          'Resend',
-                                          style: TextStyle(
-                                              fontSize: 14.sp,
-                                              color: _timerDuration == 0
-                                                  ? CustomTheme
-                                                      .primaryColor
-                                                  : CustomTheme
-                                                      .seconderyColor),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Spacer(),
-                              CustomButtonWidget(
-                                isValid: isValid,
-                                btnTitle: 'Continue',
-                                onBtnPress: () {
-                                  if (isFocused || isValid) {
-                                    context
-                                        .read<VerifyOtpCubit>()
-                                        .otpVerify(widget.email,
-                                            _otpController.text);
-                                    if (state.status ==
-                                            VerifyStatus.loaded &&
-                                        context
-                                                .read<VerifyOtpCubit>()
-                                                .state
-                                                .verifyotp
-                                                .status ==
-                                            200) {
-                                      Timer(Duration(seconds: 2), () {
-                                        Navigator.pop(context);
-                                      });
-                                    }
-                                  }
-                                },
-                              ),
-                              SizedBox(height: 20)
-                            ],
-                          ),
-                        )
-                      ],
+                      ),
                     ),
                   ),
+
+                  Spacer(),
+                  Center(
+                    child: Container(
+                      height: 90,
+                      width: 90,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: CustomTheme.seconderyColor,
+                      ),
+                      margin: EdgeInsets.only(bottom: 10),
+                      child: Center(
+                        child: Image.asset('assets/otp_logo.png'),
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  // SizedBox(height: 70.h),
+                  SingleChildScrollView(
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.73,
+                      width: MediaQuery.of(context).size.width,
+                  /*    padding: EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                        bottom: MediaQuery.of(context)
+                            .viewInsets
+                            .bottom,
+                      ),*/
+                      margin: EdgeInsets.only(
+                        bottom: MediaQuery.of(context)
+                                .viewInsets
+                                .bottom *
+                            0.4,
+                      ),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            'assets/bg_round.png',
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(top: 30.0),
+                            child: RichText(
+                                text: TextSpan(children: [
+                              TextSpan(
+                                text:
+                                    'We have successfully sent an OTP (One-Time-\nPassword) to ',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14),
+                              ),
+                              TextSpan(
+                                text: widget.email,
+                                style: TextStyle(
+                                    color: CustomTheme.primaryColor,
+                                    fontSize: 14),
+                              ),
+                            ])),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                top: 10.0, left: 73.w, right: 73.w),
+                            child: Pinput(
+                              controller: _otpController,
+                              length: 4,
+                              defaultPinTheme: CustomTheme.pintheme,
+                              focusedPinTheme: CustomTheme.pintheme,
+                              submittedPinTheme:
+                                  CustomTheme.pintheme,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'[0-9]')),
+                              ],
+                              validator: (s) {
+                                if (s!.isEmpty) {
+                                  return "invalid Otp!";
+                                }
+                              },
+                              onTap: () {
+                                setState(() {
+                                  isFocused = true;
+                                });
+                              },
+                              pinputAutovalidateMode:
+                                  PinputAutovalidateMode.onSubmit,
+                              showCursor: true,
+                              onCompleted: (pin) {
+                                setState(() {
+                                  isValid = true;
+                                  isFocused = false;
+                                });
+                              },
+                            ),
+                          ),
+                          expairTime == 0
+                              ? Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 10),
+                                  child: Text('Expaired Otp !',
+                                      style: TextStyle(
+                                          color: CustomTheme
+                                              .redErrorColor)),
+                                )
+                              : context
+                                          .read<VerifyOtpCubit>()
+                                          .state
+                                          .verifyotp
+                                          .status ==
+                                      403
+                                  ? Padding(
+                                      padding:
+                                          const EdgeInsets.only(
+                                              top: 10),
+                                      child: Text(
+                                        'Invalid Otp !',
+                                        style: TextStyle(
+                                            color: CustomTheme
+                                                .redErrorColor),
+                                      ),
+                                    )
+                                  : Container(),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: 20.0,
+                            ),
+                            child: Center(
+                              child: Text(
+                                '00:$seconds sec',
+                                style:
+                                    TextStyle(color: Colors.grey),
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                top: 12.0,
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    "Didn’t receive OTP yet?",
+                                    style: TextStyle(
+                                        fontSize: 14.sp,
+                                        color: Colors.grey),
+                                  ),
+                                  TextButton(
+                                    onPressed: () async {
+                                      if (_timerDuration == 0) {
+                                        setState(() {
+                                          _timerDuration = 30;
+                                          expairTime = 180;
+                                        });
+                                        startTimer();
+                                        startExpairTimer();
+                                        await resendOtp(
+                                            widget.email);
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              Future.delayed(
+                                                  Duration(
+                                                      seconds: 1),
+                                                  () {
+                                                Navigator.of(
+                                                        context)
+                                                    .pop(true);
+                                              });
+                                              return ShowToastMessage();
+                                            });
+                                      }
+                                    },
+                                    child: Text(
+                                      'Resend',
+                                      style: TextStyle(
+                                          fontSize: 14.sp,
+                                          color: _timerDuration == 0
+                                              ? CustomTheme
+                                                  .primaryColor
+                                              : CustomTheme
+                                                  .seconderyColor),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Spacer(),
+                          CustomButtonWidget(
+                            isValid: isValid,
+                            btnTitle: 'Continue',
+                            onBtnPress: () {
+                              if (isFocused || isValid) {
+                                context
+                                    .read<VerifyOtpCubit>()
+                                    .otpVerify(widget.email,
+                                        _otpController.text);
+                                if (state.status ==
+                                        VerifyStatus.loaded &&
+                                    context
+                                            .read<VerifyOtpCubit>()
+                                            .state
+                                            .verifyotp
+                                            .status ==
+                                        200) {
+                                  Timer(Duration(seconds: 2), () {
+                                    Navigator.pop(context);
+                                  });
+                                }
+                              }
+                            },
+                          ),
+                          SizedBox(height: 20)
+                        ],
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
