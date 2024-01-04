@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grower/presentation/update_profile/user_profile_screen.dart';
+import 'package:grower/responsive/orientation_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../heiper/navigator_function.dart';
 import '../../../../theme/custom_theme.dart';
@@ -20,7 +21,10 @@ class CalculatorBottomModelSheet extends StatelessWidget {
       ),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12),
-        height: 234.w,
+     //   height:  MediaQuery.of(context).size.height ,
+       // height:  OrientationUtil.isLandscape(context) ? MediaQuery.of(context).size.height : null,
+      //  height: 235.h ,
+        //height:  234.h,
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,

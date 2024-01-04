@@ -61,7 +61,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+      data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: CustomAppbarWidget(
@@ -99,9 +99,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             }
           },
           builder: (context, state) {
-            return WillPopScope(
-              onWillPop: () async {
-                final shouldPop = await showDialog<bool>(
+            return PopScope(
+              canPop: false,
+              onPopInvoked: (shouldPop) async {
+                final shouldPop = await showDialog(
                   context: context,
                   builder: (context) {
                     return AlertDialogWidget(
@@ -122,7 +123,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         }); //will show a alert dialog if user want to close the app
                   },
                 );
-                return shouldPop!;
+                return shouldPop;
               },
               child: Form(
                 key: _formKey,

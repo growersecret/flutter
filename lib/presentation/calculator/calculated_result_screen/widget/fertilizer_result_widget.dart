@@ -85,7 +85,7 @@ class _FertilizerResultWidgetState extends State<FertilizerResultWidget> {
               ),
               Text("TDW(lbs)", style: TextStyle(fontSize: 14)),
               SizedBox(width: 16),
-              Text("NPK(%)", style: TextStyle(fontSize: 14)),
+              Expanded(child: Text("NPK(%)", style: TextStyle(fontSize: 14))),
             ],
           ),
           Divider(color: CustomTheme.primaryColor, thickness: 1.5),

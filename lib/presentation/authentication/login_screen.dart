@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -56,42 +58,68 @@ class _LoginScreenState extends State<LoginScreen> {
           }
         },
         builder: (context, state) {
-          return Scaffold(
-
-            resizeToAvoidBottomInset: false,
-            backgroundColor: Colors.white,
-            body: Container(
-              //height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              color: CustomTheme.primaryColor,
-              child: SingleChildScrollView(
-                child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.start,
-                  //   mainAxisSize: MainAxisSize.min,
-                  children: [
-                    //  Spacer(),
-                    // SizedBox(height: 87.h),
-                    Center(
-                      child: Container(
-                        height: 90,
-                        width: 90,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          color: CustomTheme.seconderyColor,
-                        ),
-                        margin: EdgeInsets.only(top: 30, bottom: 10),
-                        child: Center(
-                            child: Icon(
-                              Icons.mail_outline,
-                              color: CustomTheme.primaryColor,
-                              size: 60,
-                            )),
+          return PopScope(
+            canPop: false,
+            onPopInvoked: (didPop) {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text('Do you want to exit?', style: TextStyle(fontSize: 20),),
+                    actionsAlignment: MainAxisAlignment.spaceBetween,
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          exit(0);
+                        },
+                        child: const Text('Yes', style: TextStyle(color: Colors.black),),
                       ),
-                    ),
-                    //  Spacer(),
-                    SizedBox(height: 70.h),
-                    SingleChildScrollView(
-                      child: Container(
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context, false);
+                        },
+                        child: const Text('No', style: TextStyle(color: Colors.black),),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            child: Scaffold(
+            //  resizeToAvoidBottomInset: false,
+              backgroundColor: Colors.white,
+              body: Container(
+                //height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                color: CustomTheme.primaryColor,
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    //   mainAxisSize: MainAxisSize.min,
+                    children: [
+                      //  Spacer(),
+                      // SizedBox(height: 87.h),
+                      Center(
+                        child: Container(
+                          height: 90,
+                          width: 90,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: CustomTheme.seconderyColor,
+                          ),
+                          margin: EdgeInsets.only(top: 30, bottom: 10),
+                          child: Center(
+                              child: Icon(
+                            Icons.mail_outline,
+                            color: CustomTheme.primaryColor,
+                            size: 60,
+                          )),
+                        ),
+                      ),
+                      //  Spacer(),
+                      SizedBox(height: 70.h),
+                      Container(
                         height: MediaQuery.of(context).size.height * 0.73,
                         // height: 500.h,
                         width: MediaQuery.of(context).size.width,
@@ -114,13 +142,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 'assets/bg_round.png',
                               ),
                               fit: BoxFit.cover),
-
                         ),
                         child: Form(
                           key: _formKey,
                           child: Padding(
                             //  padding: const EdgeInsets.only(left: 9.0, right: 9.0, top: 30.0),
-                            padding: EdgeInsets.symmetric(vertical: 50.0, horizontal: 15.0),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 2.0, horizontal: 15.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -128,13 +156,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                   'Email Address',
                                   style: TextStyle(
                                       color: Colors.black,
-                                      fontSize:
-                                      CustomTheme.fontsize['sm']),
+                                      fontSize: CustomTheme.fontsize['sm']),
                                 ),
                                 SizedBox(
                                   height: 12.0,
                                 ),
                                 CustomTextFieldWidget(
+                                  inputType: TextInputType.emailAddress,
                                   isfocused: isFocused,
                                   controller: emailController,
                                   hinttext: 'abc@gmail.com',
@@ -150,32 +178,32 @@ class _LoginScreenState extends State<LoginScreen> {
                                     context
                                         .read<IsSigninValidCubit>()
                                         .checkSignIn(context
-                                        .read<EmailCheckerCubit>()
-                                        .state
-                                        .isemailValid);
+                                            .read<EmailCheckerCubit>()
+                                            .state
+                                            .isemailValid);
                                   },
                                   validator: (value) {
                                     return null;
                                   },
                                 ),
                                 context
-                                    .watch<EmailCheckerCubit>()
-                                    .state
-                                    .isemailValid
+                                        .watch<EmailCheckerCubit>()
+                                        .state
+                                        .isemailValid
                                     ? Container()
                                     : Text(
-                                    'Please enter a valid email address !',
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      color: Colors.red,
-                                    )),
+                                        'Please enter a valid email address !',
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          color: Colors.red,
+                                        )),
                                 SizedBox(
                                   height: 12.0,
                                 ),
                                 Text(
                                   'Please enter your email to receive an OTP (One Time Password)',
                                   style: TextStyle(
-                                    fontSize: 14.sp,
+                                    fontSize: 18,
                                     color: CustomTheme.greyshade1
                                         .withOpacity(0.8),
                                   ),
@@ -184,98 +212,94 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Column(
                                   children: [
                                     context
-                                        .watch<IsSigninValidCubit>()
-                                        .state
-                                        .isSignInValid
-                                        ? Padding(
-                                      padding: const EdgeInsets.only(
-                                          bottom: 8.0),
-                                      child: CustomButtonWidget(
-                                        isValid: context
-                                            .read<
-                                            IsSigninValidCubit>()
+                                            .watch<IsSigninValidCubit>()
                                             .state
-                                            .isSignInValid,
-                                        btnTitle: 'Continue',
-                                        onBtnPress: () {
-                                          if (_formKey.currentState!
-                                              .validate() ||
-                                              emailController
-                                                  .text.isNotEmpty) {
-                                            try {
-                                              context
-                                                  .read<LoginCubit>()
-                                                  .loginUser(
-                                                  emailController
-                                                      .text);
-                                            } catch (e) {
-                                              print(e);
-                                            }
-                                          }
-                                        },
-                                      ),
-                                    )
+                                            .isSignInValid
+                                        ? Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 8.0),
+                                            child: CustomButtonWidget(
+                                              isValid: context
+                                                  .read<IsSigninValidCubit>()
+                                                  .state
+                                                  .isSignInValid,
+                                              btnTitle: 'Continue',
+                                              onBtnPress: () {
+                                                if (_formKey.currentState!
+                                                        .validate() ||
+                                                    emailController
+                                                        .text.isNotEmpty) {
+                                                  try {
+                                                    context
+                                                        .read<LoginCubit>()
+                                                        .loginUser(
+                                                            emailController
+                                                                .text);
+                                                  } catch (e) {
+                                                    print(e);
+                                                  }
+                                                }
+                                              },
+                                            ),
+                                          )
                                         : CustomButtonWidget(
-                                      isValid: context
-                                          .watch<IsSigninValidCubit>()
-                                          .state
-                                          .isSignInValid,
-                                      btnTitle: 'Continue',
-                                      onBtnPress: () {},
-                                    ),
+                                            isValid: context
+                                                .watch<IsSigninValidCubit>()
+                                                .state
+                                                .isSignInValid,
+                                            btnTitle: 'Continue',
+                                            onBtnPress: () {},
+                                          ),
                                     isFocused
                                         ? Container()
                                         : RichText(
-                                      text: TextSpan(
-                                        children: [
-                                          TextSpan(
-                                            text:
-                                            'By Clicking Continue, you agree to our ',
-                                            style: TextStyle(
-                                                fontSize: 10,
-                                                color: Colors.black),
+                                            text: TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                  text:
+                                                      'By Clicking Continue, you agree to our ',
+                                                  style: TextStyle(
+                                                      fontSize: 10,
+                                                      color: Colors.black),
+                                                ),
+                                                TextSpan(
+                                                    text:
+                                                        ' Terms of Services',
+                                                    style: CustomTheme
+                                                        .primarytextStyle(10,
+                                                            FontWeight.bold)),
+                                                TextSpan(
+                                                  text: ' and',
+                                                  style: TextStyle(
+                                                      fontSize: 10,
+                                                      color: Colors.black),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                          TextSpan(
-                                              text:
-                                              ' Terms of Services',
-                                              style: CustomTheme
-                                                  .primarytextStyle(
-                                                  10,
-                                                  FontWeight
-                                                      .bold)),
-                                          TextSpan(
-                                            text: ' and',
-                                            style: TextStyle(
-                                                fontSize: 10,
-                                                color: Colors.black),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
                                     isFocused
                                         ? Container()
                                         : Center(
-                                        child: Padding(
-                                            padding: EdgeInsets.only(
-                                                bottom: 25.h),
-                                            child: Text(
-                                                'Privacy Policy.',
-                                                textAlign:
-                                                TextAlign.center,
-                                                style: CustomTheme
-                                                    .primarytextStyle(
-                                                    10,
-                                                    FontWeight
-                                                        .bold))))
+                                            child: Padding(
+                                                padding: EdgeInsets.only(
+                                                    bottom: 25.h),
+                                                child: Text('Privacy Policy.',
+                                                    textAlign:
+                                                        TextAlign.center,
+                                                    style: CustomTheme
+                                                        .primarytextStyle(
+                                                            10,
+                                                            FontWeight
+                                                                .bold))))
                                   ],
                                 ),
                               ],
                             ),
                           ),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

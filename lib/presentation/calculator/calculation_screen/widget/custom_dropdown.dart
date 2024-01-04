@@ -73,8 +73,10 @@ class _CustomDropDownState extends State<CustomDropDown> {
                     : Icon(Icons.arrow_forward_ios,
                         color: CustomTheme.primaryColor),
                 const SizedBox(width: 10),
-                Text(context.watch<DropdownIndexCubit>().state.fertilizer,
-                    style: TextStyle(color: Colors.grey)),
+                Expanded(
+                  child: Text(context.watch<DropdownIndexCubit>().state.fertilizer,
+                      style: TextStyle(color: Colors.grey)),
+                ),
               ],
             ),
           ),

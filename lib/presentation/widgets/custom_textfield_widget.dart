@@ -16,6 +16,7 @@ class CustomTextFieldWidget extends StatelessWidget {
     this.readOnly = false,
     required this.isfocused,
   });
+
   final String hinttext;
   VoidCallback ontap;
   final bool isfocused;
@@ -23,9 +24,11 @@ class CustomTextFieldWidget extends StatelessWidget {
   ValueChanged<String>? onChanged;
   final TextEditingController controller;
   int? maxline;
+
   // int? maxlength;
   TextInputType? inputType;
   bool readOnly;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,6 +46,9 @@ class CustomTextFieldWidget extends StatelessWidget {
             : [],
       ),
       child: TextFormField(
+        onTapOutside: (event) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
         readOnly: readOnly,
         controller: controller,
         maxLines: maxline,

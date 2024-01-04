@@ -104,7 +104,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     print("setup -->${profile_updated}");
 
     return MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+      data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
       child: Scaffold(
         appBar: CustomAppbarWidget(
           appbarTitle: 'Calculator',

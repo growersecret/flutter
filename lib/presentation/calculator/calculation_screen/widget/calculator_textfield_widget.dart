@@ -51,6 +51,9 @@ class CalculatorTextFieldWidget extends StatelessWidget {
             height: 54,
             decoration: CustomTheme.calculatorContianerStyle,
             child: TextFormField(
+              onTapOutside: (event) {
+                FocusManager.instance.primaryFocus?.unfocus();
+              },
               controller: controller,
               textAlign: TextAlign.right,
               cursorColor: CustomTheme.primaryColor,

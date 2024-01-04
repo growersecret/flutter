@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:grower/heiper/islogged_in_checker.dart';
@@ -32,7 +33,14 @@ import 'presentation/update_profile/cubit/update_profile/update_profile_cubit.da
 import 'theme/custom_theme.dart';
 
 void main() async {
-  runApp(RestartWidget(child: const MyApp()));
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((_) => {
+
+  runApp(RestartWidget(child: const MyApp()))
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -70,6 +78,7 @@ class MyApp extends StatelessWidget {
               BlocProvider(create: (context) => TextFieldClickedCubit())
             ],
             child: MaterialApp.router(
+
               debugShowCheckedModeBanner: false,
               routerConfig: router,
               title: 'Grower',
@@ -77,7 +86,7 @@ class MyApp extends StatelessWidget {
               // home: const SplashScreen(),
             ),
 
-         /*   child: MaterialApp(
+            /*   child: MaterialApp(
               home: OtpScreen(email: '',),
             ),*/
           );
